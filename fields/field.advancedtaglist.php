@@ -69,10 +69,10 @@
 			}			
 		}
 
-		function displayPublishPanel(&$wrapper, $data=NULL, $flagWithError=NULL, $fieldnamePrefix=NULL, $fieldnamePostfix=NULL){
-
-			$value = $this->prepareTableValue($data);
+		function displayPublishPanel(&$wrapper, $data=NULL, $flagWithError=NULL, $fieldnamePrefix=NULL, $fieldnamePostfix=NULL){	
 			
+			$value = General::sanitize((is_array($data['value']) ? implode(', ', array_map('trim', $data['value'])) : $data['value'])); 
+						
 			$label = Widget::Label($this->get('label'));
 			
 			$label->appendChild(Widget::Input('fields'.$fieldnamePrefix.'['.$this->get('element_name').']'.$fieldnamePostfix, (strlen($value) != 0 ? $value : NULL)));
@@ -152,8 +152,8 @@
 			
 			if(is_array($data['value']) && !empty($data['value'])) sort($data['value']);
 			
-			$values = (count($data['value']) > 1) ? @implode(', ', $data['value']) : $data['value'];
-
+			$values = (is_array($data['value']) ? @implode(', ', array_map('trim', $data['value'])) : $data['value']);
+			
 			return parent::prepareTableValue(array('value' => General::sanitize($values)), $link);
 		}
 		
