@@ -87,9 +87,9 @@
 				if(is_array($existing_tags) && !empty($existing_tags)){
 					$taglist = new XMLElement('ul');
 					$taglist->setAttribute('class', 'tags');
-					
+
 					foreach($existing_tags as $tag) $taglist->appendChild(new XMLElement('li', $tag));
-							
+
 					$wrapper->appendChild($taglist);
 				}
 			}
@@ -97,7 +97,11 @@
 		
 		function findAllTags(){			
 			
-			$sql = "SELECT `value`, count(`value`) AS `count` FROM tbl_entries_data_%d GROUP BY `value` ORDER BY `count` DESC";
+			$sql = "SELECT `value`, count(`value`) AS `count` 
+					FROM tbl_entries_data_%d 
+					GROUP BY `value` 
+					ORDER BY `count` DESC
+					LIMIT 25";
 			
 			if(!is_array($this->get('pre_populate_source'))) return;
 			
